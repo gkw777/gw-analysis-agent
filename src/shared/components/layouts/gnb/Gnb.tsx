@@ -1,7 +1,7 @@
 // 좌측 GNB — 로고 / 새 채팅 / 핵심질문 / 키워드 / 임계설정 / 사용자정보(footer)로 구성된 패널형 사이드바.
 // 각 섹션 사이는 Divider 로 구분한다. (기존 64px 아이콘 전용 레일에서 넓은 패널로 확장)
 import { useAtomValue } from 'jotai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Divider } from '@mui/material';
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
@@ -17,11 +17,13 @@ import GnbProfile from './GnbProfile';
 import styles from './Gnb.module.scss';
 
 const Gnb = () => {
+  const navigate = useNavigate();
   const selectedAgent = useAtomValue(selectedAgentAtom);
   const agent = AGENTS.find((a) => a.id === selectedAgent);
   const AgentIcon = agent?.icon;
 
   const handleNewConversation = () => {
+    navigate(routePaths.analysis);
     window.dispatchEvent(new Event(NEW_CONVERSATION_EVENT));
   };
 
@@ -49,11 +51,11 @@ const Gnb = () => {
       <Divider />
 
       <div className={styles.scrollArea}>
-        <GnbCoreQuestions />
+        {/* <GnbCoreQuestions />
         <Divider />
         <GnbKeywords />
         <Divider />
-        <GnbThresholdSettings />
+        <GnbThresholdSettings /> */}
       </div>
 
       <Divider />
