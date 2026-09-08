@@ -1,0 +1,10 @@
+.alertModal {
+  :global(.MuiDialogContent-root) {
+    text-align: center;
+    white-space: pre-line;
+  }
+
+  :global(.MuiDialogActions-root) {
+    justify-content: center;
+  }
+}

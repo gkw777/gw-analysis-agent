@@ -1,0 +1,8 @@
+@use '@/shared/styles/variables' as v;
+
+// 밝은 배경 + 얇은 하단 보더 — 기존 네이비 글래스 헤더에서 콘텐츠 컬럼 전용 타이틀바로 역할 변경
+.titleBar {
+  background: v.$color-panel;
+  border-bottom: 1px solid v.$color-border;
+  flex-shrink: 0;
+}

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode (Vite) */
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Path alias — vite/vite.common.ts 의 '@' 별칭과 일치.
+       baseUrl 은 TS 7.0 에서 제거되므로 쓰지 않는다. paths 는 이 파일 위치 기준으로 해석된다. */
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    /* Linting */
+    "strict": true, // 모든 strict 옵션 활성화
+    "noUnusedLocals": true, // 사용하지 않는 지역 변수 허용 안 함
+    "noUnusedParameters": true, // 사용하지 않는 매개변수 허용 안 함
+    "noFallthroughCasesInSwitch": true // switch 문에서 case 문 누락 허용 안 함
+  },
+  "include": ["src", "vite.config.ts"]
+}

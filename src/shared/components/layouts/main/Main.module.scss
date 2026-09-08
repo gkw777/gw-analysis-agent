@@ -1,0 +1,11 @@
+@use '@/shared/styles/variables' as v;
+
+// 메인 콘텐츠 영역 — 남은 폭을 채우고 자식(분할뷰 등)이 flex 로 확장되게 한다.
+// body 의 은은한 메쉬 그라데이션 대신 PDF 목업처럼 콘텐츠 영역은 플랫한 화이트 배경을 쓴다.
+.main {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  background: v.$color-panel;
+}

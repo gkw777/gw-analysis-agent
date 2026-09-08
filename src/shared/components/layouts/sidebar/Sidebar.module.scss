@@ -1,0 +1,5 @@
+// 사이드바 영역 — 내부 nav 가 세로로 꽉 차도록 flex 컨테이너로 둔다
+.sidebar {
+  display: flex;
+  min-height: 0;
+}

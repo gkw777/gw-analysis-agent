@@ -1,0 +1,29 @@
+// 공통 SCSS 변수 — 2026 트렌드: 넉넉한 라운드, 여러 겹의 은은한 그림자, 글래스 헤더
+$color-bg: #f3f5fb;
+$color-bg-alt: #eef1fa; // 은은한 메쉬 그라데이션의 두 번째 톤
+$color-panel: #ffffff;
+$color-border: #e6e9f2;
+$color-primary: #1a3a6b; // 딥 네이비 (이사진 보고서 톤)
+$color-primary-light: #2c5091;
+$color-accent: #2e7d6b; // 차분한 그린 (상승/달성)
+$color-text: #1c2434;
+$color-text-sub: #6b7280;
+$color-up: #0ca30c; // 증가/긍정 지표
+$color-down: #d03b3b; // 감소/부정 지표
+
+$radius: 14px;
+$radius-lg: 20px;
+$radius-sm: 10px;
+
+// 다층 그림자 — 가까운 그림자(선명) + 먼 그림자(퍼짐)를 겹쳐 입체감을 낮은 강도로 표현
+$shadow-card:
+  0 1px 2px rgba(16, 24, 40, 0.05),
+  0 4px 14px rgba(16, 24, 40, 0.06);
+$shadow-card-hover:
+  0 4px 10px rgba(16, 24, 40, 0.08),
+  0 14px 28px rgba(16, 24, 40, 0.1);
+$shadow-float:
+  0 8px 24px rgba(16, 24, 40, 0.1),
+  0 2px 6px rgba(16, 24, 40, 0.06);
+
+$glass-blur: blur(16px);

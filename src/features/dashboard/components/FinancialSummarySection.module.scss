@@ -1,0 +1,47 @@
+@use '@/shared/styles/variables' as v;
+
+.section {
+  background: v.$color-panel;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius;
+  box-shadow: v.$shadow-card;
+  padding: 20px 24px;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+
+  h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: v.$color-text;
+  }
+}
+
+.notice {
+  font-size: 0.75rem;
+  color: v.$color-text-sub;
+}
+
+.valueCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.yoyUp {
+  color: v.$color-up;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.yoyDown {
+  color: v.$color-down;
+  font-size: 0.78rem;
+  font-weight: 600;
+}

@@ -1,0 +1,21 @@
+@use '@/shared/styles/variables' as v;
+
+.left {
+  background: v.$color-panel;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+// 분할 전 — 채팅 하나만 전체 폭. 넓은 화면에서 대화가 지나치게 퍼지지 않도록
+// 중앙 정렬 + 최대 폭 제한은 PromptLayout 내부(.bodyInner/.promptBarInner)에서 처리한다 —
+// 여기서 폭을 제한하면 스크롤바가 이 컬럼 끝(화면 중앙 부근)에 생겨버린다.
+.leftFull {
+  flex: 1;
+  background: transparent;
+
+  > :first-child {
+    flex: 1;
+    width: 100%;
+  }
+}

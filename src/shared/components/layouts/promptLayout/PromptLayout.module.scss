@@ -1,0 +1,111 @@
+@use '@/shared/styles/variables' as v;
+
+// 헤더(옵션) → 스크롤 가능한 콘텐츠 영역 → 하단 고정 프롬프트 바를 세로로 배치
+// flex: 1 — Main 이 가로 flex 컨테이너이므로, 이 값이 없으면 콘텐츠 크기만큼만 좁게 잡힌다.
+.layout {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+// 대화/결과 콘텐츠 영역 — GNB 를 제외한 콘텐츠 영역 전체 폭에서 스크롤을 소유한다.
+// margin-right 로 오른쪽 끝에서 스크롤바를 살짝 띄운다 (Gnb.module.scss 의 .scrollArea 와 동일 값/의도).
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  position: relative; // scrollToTarget 이 쓰는 offsetTop 의 offsetParent 기준점 — 자식(.bodyInner 등)엔 position 을 주지 않는다
+  margin-right: 4px;
+}
+
+// 실제 콘텐츠(메시지/인트로)를 담아 폭을 제한하고 중앙 정렬한다 — 스크롤 자체는 .body 가 소유하므로
+// 화면이 넓어도 스크롤바는 이 컬럼 끝이 아니라 콘텐츠 영역(.body) 오른쪽 끝에 나타난다.
+.bodyInner {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  min-height: 0;
+}
+
+// 대화 시작 전 빈 상태 — body(인트로)+입력창을 하나의 블록으로 묶어 화면 중앙에 배치한다
+.centered {
+  justify-content: center;
+}
+
+// 문구가 짧으면 콘텐츠 크기만큼만 차지해 기존처럼 화면 중앙에 놓이고, 길어지면 promptBar(flex-shrink:0)는
+// 그대로 둔 채 이 영역만 줄어들며 내부 스크롤이 생긴다 — 입력창은 항상 고정, 인트로만 스크롤된다.
+.bodyCentered {
+  flex: 0 1 auto;
+}
+
+.bodyInnerCentered {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+// 하단 고정 프롬프트 바 — 콘텐츠 영역과 구분되는 패널
+.promptBar {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  // border-top: 1px solid v.$color-border;
+  background: v.$color-panel;
+}
+
+// centered 모드에서는 하단 고정 바가 아니라 인트로 바로 아래 이어지는 입력창이므로 구분선/배경을 없앤다
+.promptBarCentered {
+  border-top: none;
+  background: transparent;
+}
+
+// 입력창도 메시지/인트로(.bodyInner)와 동일한 폭으로 중앙 정렬해 정렬을 맞춘다
+.promptBarInner {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+// 입력창 + 액션 툴바를 세로로 담는 둥근 카드 (ChatGPT 스타일 프롬프트 박스)
+.promptCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-lg;
+  background: v.$color-panel;
+  box-shadow: v.$shadow-float;
+}
+
+// 실제 입력 컨트롤(textarea 등)이 들어가는 영역
+.inputRow {
+  display: flex;
+  min-width: 0;
+}
+
+// 좌측 보조 액션(첨부, 옵션 등) / 우측 전송 액션을 양 끝으로 배치하는 툴바
+.toolbarRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.leadingActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.trailingActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}

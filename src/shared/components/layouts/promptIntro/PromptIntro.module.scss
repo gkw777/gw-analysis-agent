@@ -1,0 +1,43 @@
+@use '@/shared/styles/variables' as v;
+
+// PromptLayout 의 children 슬롯을 채우는 인트로 블록 — 남는 세로 공간을 채워 중앙정렬한다
+.intro {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 24px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-primary;
+  font-size: 44px;
+
+  svg {
+    font-size: 44px;
+  }
+}
+
+.notices {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.notice {
+  color: v.$color-text-sub;
+}

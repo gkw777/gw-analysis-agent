@@ -1,0 +1,106 @@
+@use '@/shared/styles/variables' as v;
+
+// 페이지 골격(header/sidebar)은 shared/components/layouts 에서 제공하므로,
+// 여기에는 채팅|보고서 분할뷰 등 분석 화면 전용 스타일만 남긴다.
+
+// 분할뷰 전환 후 — 상단 타이틀바 + 좌/우 분할 영역을 세로로 쌓는다
+.splitPage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.split {
+  flex: 1;
+  min-height: 0;
+}
+
+.panel {
+  display: flex;
+  min-height: 0;
+
+  > section {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.left {
+  background: v.$color-panel;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+// 분할 전 — 채팅 하나만 전체 폭. 넓은 화면에서 대화가 지나치게 퍼지지 않도록
+// 중앙 정렬 + 최대 폭 제한은 PromptLayout 내부(.bodyInner/.promptBarInner)에서 처리한다 —
+// 여기서 폭을 제한하면 스크롤바가 이 컬럼 끝(화면 중앙 부근)에 생겨버린다.
+.leftFull {
+  flex: 1;
+  background: transparent;
+
+  > :first-child {
+    flex: 1;
+    width: 100%;
+  }
+}
+
+.right {
+  overflow-y: auto;
+  padding: 28px 32px;
+  min-height: 0;
+  background: transparent;
+}
+
+// 좌/우 분리선 — 평소엔 얇은 경계선, hover/드래그 시 프라이머리 컬러로 강조
+.resizeHandle {
+  position: relative;
+  width: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: col-resize;
+  transition: background-color 0.15s ease;
+
+  &::after {
+    content: '';
+    width: 1px;
+    height: 100%;
+    background: v.$color-border;
+    transition: background-color 0.15s ease;
+  }
+
+  &:hover,
+  &[data-separator='active'],
+  &[data-separator='focus'] {
+    background: rgba(26, 58, 107, 0.06);
+
+    &::after {
+      background: v.$color-primary-light;
+    }
+
+    .resizeGrip {
+      background: v.$color-primary-light;
+      opacity: 1;
+    }
+  }
+}
+
+.resizeGrip {
+  position: absolute;
+  width: 4px;
+  height: 40px;
+  border-radius: 4px;
+  background: rgba(16, 24, 40, 0.2);
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.resizeHandle:hover .resizeGrip,
+.resizeHandle[data-separator='active'] .resizeGrip {
+  opacity: 1;
+}

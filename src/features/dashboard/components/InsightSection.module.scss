@@ -1,0 +1,39 @@
+@use '@/shared/styles/variables' as v;
+
+.section {
+  background: rgba(46, 125, 107, 0.06);
+  border: 1px solid rgba(46, 125, 107, 0.25);
+  border-radius: v.$radius;
+  padding: 20px 24px;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: v.$color-accent;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: v.$color-text;
+}
+
+.itemTitle {
+  font-weight: 700;
+  color: v.$color-accent;
+}
+
+.itemBody {
+  color: v.$color-text;
+}

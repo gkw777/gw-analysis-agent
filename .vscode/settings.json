@@ -1,0 +1,51 @@
+{
+  // VSCode 는 열려 있는 워크스페이스 루트의 .vscode/ 만 읽는다.
+  // 이 프로젝트는 frontend 폴더를 열고 작업하므로 설정은 여기에 둔다.
+  // 필요한 확장은 .vscode/extensions.json 참고.
+
+  // ── import 경로 ────────────────────────────────────────────────
+  // 자동 import(Shift+Space, Quick Fix)가 상대경로 대신 '@/...' 절대경로를 쓰도록.
+  // 키 이름은 importModuleSpecifier 다 — 'Format' 을 붙이면 존재하지 않는 키가 되어
+  // 조용히 무시되고 기본값('shortest')으로 동작한다.
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+
+  // 타입으로만 쓰이는 심볼은 자동완성 시 'import type { X }' 로 생성한다.
+  // 새로 만드는 import 에만 적용된다 — 기존 'import { X }' 는 바뀌지 않는다.
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
+
+  // ── 포맷 ──────────────────────────────────────────────────────
+  // .prettierrc 를 팀 공통 스타일로 적용한다.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  // 언어별로도 명시한다. 팀원이 이미 깔아둔 다른 포매터 확장이
+  // 특정 언어의 기본 포매터를 가로채는 경우를 막는 용도.
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[scss]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[markdown]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+
+  // ── lint ──────────────────────────────────────────────────────
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  // no-relative-import-paths 플러그인이 rootDir('src')를 ESLint 실행 cwd 기준으로
+  // 계산한다. cwd 가 어긋나면 에러를 내는 게 아니라 규칙이 조용히 침묵해서,
+  // "CLI 로는 잡히는데 저장해도 안 고쳐지는" 증상이 된다. 반드시 명시할 것.
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  // 저장 시 남아 있는 '../' 상대경로 import 를 절대경로로 자동 수정
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // ── 줄바꿈 ────────────────────────────────────────────────────
+  // Prettier 의 endOfLine 기본값이 lf 라 이걸 맞추지 않으면
+  // Windows 에서 저장할 때마다 줄바꿈만 바뀐 diff 가 발생한다.
+  "files.eol": "\n"
+}

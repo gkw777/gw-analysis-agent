@@ -1,0 +1,19 @@
+@use '@/shared/styles/variables' as v;
+
+.card {
+  background: v.$color-panel;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius;
+  box-shadow: v.$shadow-card;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: v.$color-text;
+}

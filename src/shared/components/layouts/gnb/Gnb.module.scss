@@ -1,0 +1,242 @@
+@use '@/shared/styles/variables' as v;
+
+// 넓은 패널형 GNB — 로고/새채팅/핵심질문/키워드/임계설정/사용자정보(footer)를 세로로 담는다.
+// 하드 보더 대신 얇은 그림자로 콘텐츠 영역과 구분한다.
+.nav {
+  width: 264px;
+  flex-shrink: 0;
+  height: 100%;
+  padding: 18px 16px;
+  background: v.$color-panel;
+  box-shadow:
+    1px 0 0 v.$color-border,
+    2px 0 12px rgba(16, 24, 40, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 1;
+}
+
+// 상단 로고 — 아이콘 + 서비스명 텍스트
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px;
+  color: v.$color-primary;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.newChatButton {
+  border-radius: v.$radius-lg;
+}
+
+// 대시보드 메뉴 항목 — "새 채팅" CTA 버튼과 달리, questionItem/profileButton 과 같은
+// 텍스트 메뉴 행 스타일(투명 배경 + hover 시 옅은 배경)로 표현한다.
+.dashboardMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px;
+  border-radius: v.$radius-sm;
+  color: v.$color-text;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: rgba(26, 58, 107, 0.06);
+  }
+}
+
+// 핵심질문/키워드/임계설정을 담는 스크롤 영역 — 항목이 늘어나도 GNB 전체 높이를 넘지 않게 한다.
+// nav 의 우측 패딩(16px)만큼 영역을 넓혀 스크롤바가 GNB 가장자리 쪽에 오도록 하되,
+// 가장자리에 완전히 붙지는 않게 4px 만 남겨 살짝 띄운다.
+.scrollArea {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-right: -12px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.sectionTitle {
+  color: v.$color-text-sub;
+  letter-spacing: 0.02em;
+}
+
+.sectionChevron {
+  color: v.$color-text-sub;
+  transition: transform 0.15s ease;
+}
+
+.sectionChevronExpanded {
+  transform: rotate(180deg);
+}
+
+// 핵심 질문 리스트
+.questionList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.questionItem {
+  width: 100%;
+  text-align: left;
+  padding: 7px 8px;
+  border: none;
+  border-radius: v.$radius-sm;
+  background: transparent;
+  color: v.$color-text;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: rgba(26, 58, 107, 0.06);
+  }
+}
+
+.questionItemActive {
+  background: rgba(26, 58, 107, 0.1);
+  color: v.$color-primary;
+  font-weight: 600;
+
+  &:hover {
+    background: rgba(26, 58, 107, 0.14);
+  }
+}
+
+// 키워드 칩
+.keywordList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.keywordChip {
+  background: v.$color-bg-alt;
+  color: v.$color-text-sub;
+  font-size: 0.72rem;
+}
+
+// 임계 설정
+.thresholdGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.thresholdGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.thresholdGroupLabel {
+  color: v.$color-text-sub;
+}
+
+.thresholdOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.thresholdOption {
+  padding: 4px 10px;
+  border: 1px solid v.$color-border;
+  border-radius: 999px;
+  background: v.$color-panel;
+  color: v.$color-text-sub;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    border-color: v.$color-primary-light;
+  }
+}
+
+.thresholdOptionActive {
+  background: v.$color-primary;
+  border-color: v.$color-primary;
+  color: #fff;
+
+  &:hover {
+    border-color: v.$color-primary;
+  }
+}
+
+// 하단 사용자정보(footer) — 아바타 + 이름/직급 인라인 텍스트
+.profileButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: v.$radius-sm;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: rgba(26, 58, 107, 0.06);
+  }
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.profileName {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: v.$color-text;
+}
+
+.profileRole {
+  font-size: 0.72rem;
+  color: v.$color-text-sub;
+}

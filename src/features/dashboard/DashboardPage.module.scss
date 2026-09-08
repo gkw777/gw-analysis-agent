@@ -1,0 +1,55 @@
+@use '@/shared/styles/variables' as v;
+
+// 페이지 골격(header/sidebar)은 shared/components/layouts 에서 제공하므로,
+// 여기에는 대시보드 콘텐츠 전용 레이아웃(그리드 배치)만 남긴다.
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: v.$color-text-sub;
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// grid item 은 기본 min-width: auto 라 내부 콘텐츠(min-content)가 좁으면(예: 방사형 차트처럼
+// SVG 뿐이라 텍스트만 wrap 되는 경우) 그 트랙이 fr 비율을 무시하고 찌그러진다 — 각 카드에
+// min-width: 0 을 줘서 fr 비율대로 균등 분배되게 한다.
+.performanceGrid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1.1fr;
+  gap: 20px;
+
+  > * {
+    min-width: 0;
+  }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bottomGrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+
+  > * {
+    min-width: 0;
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
+}

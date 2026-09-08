@@ -1,0 +1,15 @@
+root = true
+
+# .prettierrc 와 값을 일치시킨다.
+# Prettier 가 다루지 않는 파일(.env 등)과 VSCode 외 에디터를 쓰는 팀원까지 커버하는 용도.
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# 마크다운은 줄 끝 공백 두 개가 줄바꿈 문법이라 예외
+[*.md]
+trim_trailing_whitespace = false

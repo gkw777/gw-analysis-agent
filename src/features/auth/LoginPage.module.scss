@@ -1,0 +1,63 @@
+@use '@/shared/styles/variables' as v;
+
+.wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(150deg, v.$color-bg 0%, #e7edf7 55%, #dfe9f6 100%);
+}
+
+// 배경 장식용 블러 블롭 — 최근 SaaS 로그인 화면 트렌드
+.blobA,
+.blobB {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.blobA {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  left: -100px;
+  background: rgba(44, 80, 145, 0.22);
+}
+
+.blobB {
+  width: 380px;
+  height: 380px;
+  bottom: -140px;
+  right: -80px;
+  background: rgba(46, 125, 107, 0.16);
+}
+
+.card {
+  position: relative;
+  width: 380px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: v.$radius-lg;
+  box-shadow: v.$shadow-float;
+  padding: 20px 8px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: v.$glass-blur;
+  -webkit-backdrop-filter: v.$glass-blur;
+}
+
+.iconBadge {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: linear-gradient(155deg, v.$color-primary 0%, v.$color-primary-light 100%);
+  box-shadow: 0 6px 16px rgba(26, 58, 107, 0.32);
+}
+
+.titleBlock {
+  text-align: center;
+}
