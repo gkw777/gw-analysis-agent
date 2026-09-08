@@ -1,0 +1,95 @@
+# 이미지 빌드 + 사내 레지스트리 푸시.
+#
+# 브랜치가 곧 환경이다. 승격은 사람이 머지로 수행한다:
+#   develop → dev, staging → stg, release → prod
+#
+# VITE_* 는 빌드 타임에 번들에 박히므로 환경마다 이미지를 따로 굽는다.
+# 클러스터 배포(ArgoCD/k8s)는 이 워크플로 범위 밖이다 — 여기서는 레지스트리에 올리는 데서 끝난다.
+name: release
+
+on:
+  push:
+    branches: [develop, staging, release]
+    # 문서/매니페스트만 바뀐 경우는 이미지를 다시 굽지 않는다
+    paths-ignore:
+      - 'docs/**'
+      - 'k8s/**'
+      - 'argocd/**'
+      - '**.md'
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false # 배포성 작업이라 중간에 끊지 않는다
+
+env:
+  # 레지스트리 주소는 secrets 로 주입한다(사내망 주소가 노출되지 않도록).
+  # 이미지 경로는 비밀이 아니므로 여기 둔다.
+  IMAGE_NAME: analysis-agent/frontend
+
+jobs:
+  build-and-push:
+    # 사내망 레지스트리에 GitHub 호스티드 러너가 닿지 않으면
+    # [self-hosted, linux, x64] 로 교체한다 (이 줄만 바꾸면 된다)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # 브랜치 → 환경 매핑. 이후 스텝은 전부 이 출력을 참조한다.
+      - name: 환경 결정
+        id: env
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            develop) build_env=dev  ;;
+            staging) build_env=stg  ;;
+            release) build_env=prod ;;
+            *)
+              echo "::error::지원하지 않는 브랜치: ${GITHUB_REF_NAME}"
+              exit 1
+              ;;
+          esac
+          echo "build_env=${build_env}" >> "$GITHUB_OUTPUT"
+          echo "short_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: 레지스트리 로그인
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.REGISTRY_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: 빌드 & 푸시
+        uses: docker/build-push-action@v6
+        with:
+          # 컨텍스트는 저장소 루트, Dockerfile 만 docker/ 아래에 있다
+          context: .
+          file: docker/Dockerfile
+          push: true
+          build-args: |
+            BUILD_ENV=${{ steps.env.outputs.build_env }}
+          tags: |
+            ${{ secrets.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ steps.env.outputs.build_env }}-${{ steps.env.outputs.short_sha }}
+            ${{ secrets.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ steps.env.outputs.build_env }}-latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # k8s overlay 에 넣을 태그를 바로 복사할 수 있게 요약에 남긴다.
+      - name: 요약
+        run: |
+          {
+            echo "### 이미지 푸시 완료"
+            echo ""
+            echo "| 항목 | 값 |"
+            echo "|---|---|"
+            echo "| 브랜치 | \`${GITHUB_REF_NAME}\` |"
+            echo "| 환경 | \`${{ steps.env.outputs.build_env }}\` |"
+            echo "| 태그 | \`${{ steps.env.outputs.build_env }}-${{ steps.env.outputs.short_sha }}\` |"
+            echo ""
+            echo "k8s overlay 반영:"
+            echo '```bash'
+            echo "cd k8s/overlays/${{ steps.env.outputs.build_env }}"
+            echo "kustomize edit set image PLACEHOLDER_REGISTRY/analysis-agent/frontend=${{ secrets.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ steps.env.outputs.build_env }}-${{ steps.env.outputs.short_sha }}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

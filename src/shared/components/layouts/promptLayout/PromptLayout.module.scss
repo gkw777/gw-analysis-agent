@@ -11,8 +11,8 @@
   min-height: 0;
 }
 
-// 대화/결과 콘텐츠 영역 — GNB 를 제외한 콘텐츠 영역 전체 폭에서 스크롤을 소유한다.
-// margin-right 로 오른쪽 끝에서 스크롤바를 살짝 띄운다 (Gnb.module.scss 의 .scrollArea 와 동일 값/의도).
+// 대화/결과 콘텐츠 영역 — LNB 를 제외한 콘텐츠 영역 전체 폭에서 스크롤을 소유한다.
+// margin-right 로 오른쪽 끝에서 스크롤바를 살짝 띄운다 (Lnb.module.scss 의 .scrollArea 와 동일 값/의도).
 .body {
   flex: 1;
   display: flex;

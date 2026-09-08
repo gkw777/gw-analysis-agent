@@ -2,15 +2,15 @@ import { useState, type ReactNode } from 'react';
 import { Typography, Collapse } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import classNames from 'classnames';
-import styles from './Gnb.module.scss';
+import styles from './Lnb.module.scss';
 
-interface GnbSectionProps {
+interface LnbSectionProps {
   title: string;
   children: ReactNode;
   defaultExpanded?: boolean;
 }
 
-const GnbSection = ({ title, children, defaultExpanded = true }: GnbSectionProps) => {
+const LnbSection = ({ title, children, defaultExpanded = true }: LnbSectionProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
 
   return (
@@ -34,4 +34,4 @@ const GnbSection = ({ title, children, defaultExpanded = true }: GnbSectionProps
   );
 };
 
-export default GnbSection;
+export default LnbSection;

@@ -1,0 +1,54 @@
+# 코드 검증 — 이미지를 굽기 전에 코드가 정상인지만 본다. 푸시/배포는 하지 않는다.
+#
+# 이 저장소(gw-analysis-agent)는 프론트엔드가 곧 저장소 루트라
+# .github/workflows/ 가 루트에 있고, 별도 경로 보정 없이 그대로 동작한다.
+name: ci
+
+# 배포용 문서/매니페스트만 바뀐 경우는 코드 검증을 돌릴 필요가 없다.
+# (GitHub Actions 는 YAML 앵커를 지원하지 않아 두 번 적는다)
+on:
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - 'k8s/**'
+      - 'argocd/**'
+      - '**.md'
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - 'k8s/**'
+      - 'argocd/**'
+      - '**.md'
+
+# 같은 브랜치에서 연속 푸시하면 이전 실행을 취소한다
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    # 사내망 리소스가 필요해지면 [self-hosted, linux, x64] 로 교체
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # package-lock.json 을 커밋하는 저장소라 setup-node 의 npm 캐시를 그대로 쓸 수 있다.
+      # (lock 을 커밋하지 않는 저장소라면 이 줄이 잡을 실패시킨다 — docs/DEPLOYMENT.md 4절 참고)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      # lock 이 있으므로 npm install 이 아니라 npm ci 를 쓴다.
+      # lock 에 적힌 버전을 그대로 설치하므로 빌드 시점이 달라도 같은 트리가 나온다.
+      - name: 의존성 설치
+        run: npm ci
+
+      # package.json 의 validate = typecheck + lint + format:check
+      - name: 검증 (typecheck + lint + format)
+        run: npm run validate
+
+      # 실제로 빌드가 되는지까지 확인한다. 산출물은 쓰지 않고 버린다.
+      - name: 빌드 확인
+        run: npm run build:dev

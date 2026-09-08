@@ -7,5 +7,5 @@ export const UNAUTHORIZED_EVENT = 'auth:unauthorized';
 /** 사용자가 직접 로그아웃했을 때 발행 */
 export const LOGOUT_EVENT = 'auth:logout';
 
-/** GNB "새 대화" 클릭 시 발행 — feature 가 구독해 채팅/보고서 세션 상태를 초기화한다 */
+/** LNB "새 대화" 클릭 시 발행 — feature 가 구독해 채팅/보고서 세션 상태를 초기화한다 */
 export const NEW_CONVERSATION_EVENT = 'app:new-conversation';

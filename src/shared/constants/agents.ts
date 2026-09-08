@@ -1,4 +1,4 @@
-// GNB 에 노출되는 에이전트 목록.
+// LNB 에 노출되는 에이전트 목록.
 // 새 에이전트를 추가하려면:
 //   1. shared/types/agent.ts 의 AgentId 에 id 를 추가하고
 //   2. 이 배열에 항목을 추가한다 (enabled: true)

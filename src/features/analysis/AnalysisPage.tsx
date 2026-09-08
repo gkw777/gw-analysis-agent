@@ -1,4 +1,4 @@
-// 분석 화면 콘텐츠 — 좌측 GNB 는 shared/components/layouts/appShell 에서 제공하므로,
+// 분석 화면 콘텐츠 — 좌측 LNB 는 shared/components/layouts/appShell 에서 제공하므로,
 // 여기는 채팅/보고서 분할뷰 콘텐츠만 렌더링한다. (revenue-agent/frontend 의 분할뷰 패턴을 이식)
 // 타이틀바는 대화 시작 전 첫 화면(빈 상태)에는 없고, 분할뷰로 전환된 뒤에만 상단에 노출한다.
 import { useAtomValue } from 'jotai';
@@ -17,7 +17,7 @@ const AnalysisPage = () => {
   const selectedAgent = useAtomValue(selectedAgentAtom);
   const agentLabel = AGENTS.find((a) => a.id === selectedAgent)?.label ?? '';
 
-  // GNB "새 채팅" 클릭 · 로그아웃 · 토큰 만료 시 대화를 비우고 첫 화면으로 되돌린다
+  // LNB "새 채팅" 클릭 · 로그아웃 · 토큰 만료 시 대화를 비우고 첫 화면으로 되돌린다
   useConversationReset();
 
   // 좌/우 분할 비율을 로컬스토리지에 기억해 새로고침해도 유지한다

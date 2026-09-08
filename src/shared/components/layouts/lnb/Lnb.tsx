@@ -1,4 +1,4 @@
-// 좌측 GNB — 로고 / 새 채팅 / 핵심질문 / 키워드 / 임계설정 / 사용자정보(footer)로 구성된 패널형 사이드바.
+// 좌측 LNB — 로고 / 새 채팅 / 핵심질문 / 키워드 / 임계설정 / 사용자정보(footer)로 구성된 패널형 사이드바.
 // 각 섹션 사이는 Divider 로 구분한다. (기존 64px 아이콘 전용 레일에서 넓은 패널로 확장)
 import { useAtomValue } from 'jotai';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,13 +10,15 @@ import { Button } from '@/shared/components/commons';
 import { selectedAgentAtom } from '@/shared/store';
 import { AGENTS } from '@/shared/constants';
 import { routePaths } from '@/routers/paths';
-import GnbCoreQuestions from './GnbCoreQuestions';
-import GnbKeywords from './GnbKeywords';
-import GnbThresholdSettings from './GnbThresholdSettings';
-import GnbProfile from './GnbProfile';
-import styles from './Gnb.module.scss';
+// 아래 세 섹션은 scrollArea 의 JSX 와 함께 잠시 꺼둔 상태다.
+// 되살릴 때 이 import 들도 같이 주석을 푼다. (import 만 살려두면 typecheck 가 미사용으로 잡는다)
+// import LnbCoreQuestions from './LnbCoreQuestions';
+// import LnbKeywords from './LnbKeywords';
+// import LnbThresholdSettings from './LnbThresholdSettings';
+import LnbProfile from './LnbProfile';
+import styles from './Lnb.module.scss';
 
-const Gnb = () => {
+const Lnb = () => {
   const navigate = useNavigate();
   const selectedAgent = useAtomValue(selectedAgentAtom);
   const agent = AGENTS.find((a) => a.id === selectedAgent);
@@ -51,18 +53,18 @@ const Gnb = () => {
       <Divider />
 
       <div className={styles.scrollArea}>
-        {/* <GnbCoreQuestions />
+        {/* <LnbCoreQuestions />
         <Divider />
-        <GnbKeywords />
+        <LnbKeywords />
         <Divider />
-        <GnbThresholdSettings /> */}
+        <LnbThresholdSettings /> */}
       </div>
 
       <Divider />
 
-      <GnbProfile />
+      <LnbProfile />
     </nav>
   );
 };
 
-export default Gnb;
+export default Lnb;

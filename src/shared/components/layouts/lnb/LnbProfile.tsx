@@ -1,4 +1,4 @@
-// GNB 맨 아래 프로필(footer) — 아바타 옆에 이름/직급을 인라인 텍스트로 노출하고,
+// LNB 맨 아래 프로필(footer) — 아바타 옆에 이름/직급을 인라인 텍스트로 노출하고,
 // 클릭 시 로그아웃이 담긴 팝오버 메뉴를 보여준다.
 import { useState, type MouseEvent } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -6,9 +6,9 @@ import { Avatar, Divider, ListItemIcon, ListItemText, Menu, MenuItem, Typography
 import LogoutIcon from '@mui/icons-material/Logout';
 import { authAtom } from '@/shared/store';
 import { saveAuth, LOGOUT_EVENT } from '@/shared/utils';
-import styles from './Gnb.module.scss';
+import styles from './Lnb.module.scss';
 
-const GnbProfile = () => {
+const LnbProfile = () => {
   const auth = useAtomValue(authAtom);
   const setAuth = useSetAtom(authAtom);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -66,4 +66,4 @@ const GnbProfile = () => {
   );
 };
 
-export default GnbProfile;
+export default LnbProfile;

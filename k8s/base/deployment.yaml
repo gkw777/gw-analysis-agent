@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/part-of: analysis-agent
+spec:
+  replicas: 1 # overlay 에서 환경별로 덮어쓴다
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend
+
+  # 배포 중 청크 404 완화 —
+  # 구버전 index.html 을 이미 받은 브라우저가 옛 해시의 청크를 요청할 수 있으므로
+  # 새 파드가 준비된 뒤에도 구 파드를 곧바로 내리지 않는다.
+  # (지금은 라우트에 React.lazy 를 쓰지 않아 위험이 낮지만, 도입 시 그대로 유효하다)
+  minReadySeconds: 30
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frontend
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101 # nginx:1.27-alpine 의 nginx 유저
+        runAsGroup: 101
+        fsGroup: 101
+        seccompProfile:
+          type: RuntimeDefault
+
+      containers:
+        - name: frontend
+          # overlay 의 images 필드가 이 값을 통째로 교체한다.
+          # 반드시 불변 태그(dev-<sha>)를 쓸 것 — '-latest' 를 쓰면
+          # imagePullPolicy: IfNotPresent 와 맞물려 노드가 옛 이미지를 재사용한다.
+          image: PLACEHOLDER_REGISTRY/analysis-agent/frontend:dev-0000000
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - name: http
+              containerPort: 8080 # non-root 라 80 이 아니다
+
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+
+          # 정적 파일만 서빙하므로 아주 가볍다. 실제 트래픽을 보고 조정할 것.
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+
+          # readOnlyRootFilesystem 이므로 nginx 가 쓰는 경로를 볼륨으로 준다.
+          # nginx.conf 에서 pid/temp 경로를 전부 /tmp 아래로 몰아두었다.
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: tmp
+          emptyDir: {}

@@ -65,7 +65,7 @@ src/
 │   │   │                    # (Button, Input, Modal, SelectBox, Checkbox,
 │   │   │                    #  RadioGroup, FormControl, FormLabel, Switch, Tooltip...)
 │   │   ├── layouts/         # 공용 레이아웃
-│   │   │                    # (AppShell[GNB+타이틀바], Sidebar, Main 영역...)
+│   │   │                    # (AppShell[LNB+타이틀바], Sidebar, Main 영역...)
 │   │   └── specific/        # feature별 공용 컴포넌트
 │   │                        # (예: 조직도 Modal, 공용 SelectBox...)
 │   ├── hooks/               # 공용 커스텀 훅 (useToken, useUserInfo...)

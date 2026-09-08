@@ -1,0 +1,29 @@
+# dev 환경 — develop 브랜치에서 빌드된 이미지를 바라본다.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: analysis-agent-dev
+
+resources:
+  - ../../base
+
+replicas:
+  - name: frontend
+    count: 1
+
+# CI(release)가 푸시한 태그로 갱신한다.
+#   kustomize edit set image PLACEHOLDER_REGISTRY/analysis-agent/frontend=<레지스트리>/analysis-agent/frontend:dev-<sha>
+# newName 은 레지스트리 주소가 정해지면 교체할 것.
+images:
+  - name: PLACEHOLDER_REGISTRY/analysis-agent/frontend
+    newName: PLACEHOLDER_REGISTRY/analysis-agent/frontend
+    newTag: dev-0000000
+
+patches:
+  - target:
+      kind: Ingress
+      name: frontend
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: dev.example.local

@@ -1,0 +1,16 @@
+# 환경 공통 매니페스트. 직접 apply 하지 말 것 — overlay 를 통해 사용한다.
+# 저장소 루트에서:
+#   kubectl kustomize k8s/overlays/dev
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/part-of: analysis-agent
+      app.kubernetes.io/component: frontend

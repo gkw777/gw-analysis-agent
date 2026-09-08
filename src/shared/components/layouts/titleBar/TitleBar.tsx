@@ -1,4 +1,4 @@
-// 콘텐츠 컬럼 상단의 얇은 타이틀바 — GNB 가 꽉 찬 높이로 바뀌면서, 기존 전체 폭 네이비 헤더 대신
+// 콘텐츠 컬럼 상단의 얇은 타이틀바 — LNB 가 꽉 찬 높이로 바뀌면서, 기존 전체 폭 네이비 헤더 대신
 // 콘텐츠 영역 위에만 걸치는 단순한 바로 역할이 바뀌었다.
 import type { ReactNode } from 'react';
 import { Toolbar, Typography } from '@mui/material';

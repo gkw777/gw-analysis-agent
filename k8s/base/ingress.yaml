@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/part-of: analysis-agent
+spec:
+  # 클러스터의 ingress controller 에 맞춰 지정할 것 (nginx / traefik / alb ...).
+  # 사내 클러스터 설정이 확인되면 아래 값을 바꾼다.
+  ingressClassName: nginx
+  rules:
+    # host 는 overlay 에서 환경별로 교체한다
+    - host: example.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80

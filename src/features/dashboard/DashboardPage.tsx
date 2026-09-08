@@ -1,4 +1,4 @@
-// 대시보드 화면 콘텐츠 — 좌측 GNB 는 shared/components/layouts/appShell 에서 제공하므로,
+// 대시보드 화면 콘텐츠 — 좌측 LNB 는 shared/components/layouts/appShell 에서 제공하므로,
 // 여기는 재무제표 요약/실적 및 현황/시장 데이터/인사이트 콘텐츠만 렌더링한다.
 import { Spinner } from '@/shared/components/commons';
 import { TitleBar } from '@/shared/components/layouts';

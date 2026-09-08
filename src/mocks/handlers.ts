@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { coreQuestions, keywords, thresholdGroups } from './gnbMockData';
+import { coreQuestions, keywords, thresholdGroups } from './lnbMockData';
 import { dashboardHandlers } from './dashboardHandlers';
 
 export const handlers = [

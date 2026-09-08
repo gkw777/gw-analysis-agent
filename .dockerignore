@@ -1,0 +1,42 @@
+# 빌드 컨텍스트에서 제외 — 이미지 크기와 빌드 시간에 직결된다.
+#
+# 이 파일은 docker/ 가 아니라 저장소 루트에 있어야 한다.
+# .dockerignore 는 빌드 컨텍스트 루트에서 읽히기 때문이다(컨텍스트는 '.', Dockerfile 만 docker/ 에 있다).
+
+node_modules
+dist
+coverage
+
+.git
+.gitignore
+
+# package-lock.json 은 제외하지 않는다.
+# 이 저장소는 lock 을 커밋하므로 Dockerfile 이 npm ci 로 lock 에 적힌 버전을 그대로 설치한다.
+# 여기에 추가하면 lock 이 사라져 npm ci 가 실패한다.
+
+# 런타임 비밀값이 이미지에 섞이지 않도록. 환경별 .env.* 는 빌드에 필요하므로 남긴다.
+.env
+
+# 편집기 / 문서 / 린트 설정 — 빌드에 불필요
+.vscode
+.editorconfig
+.eslintignore
+.eslintrc.cjs
+.prettierignore
+.prettierrc
+*.md
+.claude
+.claude-convention.md
+.claude-prompts.md
+
+# 배포 매니페스트 — 이미지 안에 들어갈 일이 없다
+k8s
+argocd
+.github
+docs
+
+# 컨테이너 설정 자신
+# docker/nginx.conf 는 런타임 스테이지에서 COPY 하므로 docker/ 를 통째로 제외하면 안 된다.
+docker/Dockerfile
+docker/docker-compose.yml
+.dockerignore

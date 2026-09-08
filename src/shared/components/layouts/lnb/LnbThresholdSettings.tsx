@@ -4,10 +4,10 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { Typography } from '@mui/material';
 import { useThresholdGroups } from '@/shared/hooks';
-import GnbSection from './GnbSection';
-import styles from './Gnb.module.scss';
+import LnbSection from './LnbSection';
+import styles from './Lnb.module.scss';
 
-const GnbThresholdSettings = () => {
+const LnbThresholdSettings = () => {
   const thresholdGroups = useThresholdGroups();
   const [selected, setSelected] = useState<Record<number, number | null>>({});
 
@@ -19,7 +19,7 @@ const GnbThresholdSettings = () => {
   };
 
   return (
-    <GnbSection title="임계 설정">
+    <LnbSection title="임계 설정">
       <div className={styles.thresholdGroups}>
         {thresholdGroups.map((group, groupIndex) => (
           <div key={group.label} className={styles.thresholdGroup}>
@@ -41,8 +41,8 @@ const GnbThresholdSettings = () => {
           </div>
         ))}
       </div>
-    </GnbSection>
+    </LnbSection>
   );
 };
 
-export default GnbThresholdSettings;
+export default LnbThresholdSettings;
